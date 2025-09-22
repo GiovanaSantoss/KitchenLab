@@ -1,9 +1,17 @@
-<h1>Receitas</h1>
+<h1>Recipes</h1>
 <a href="{% url 'add_recipe' %}">Add Recipe</a>
-<ul>
+<div class="recipes-container">
   {% for recipe in recipes %}
-  <li>{{ recipe.name }} - {{ recipe.category }} - {{ recipe.difficulty }}</li>
+  <div class="recipe-card">
+    {% if recipe.image %}
+    <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" width="200" />
+    {% endif %}
+    <h2>{{ recipe.name }}</h2>
+    <p>Category: {{ recipe.category }}</p>
+    <p>Difficulty: {{ recipe.difficulty }}</p>
+    <p>Prep Time: {{ recipe.prep_time }} min</p>
+  </div>
   {% empty %}
-  <li>No recipes add.</li>
+  <p>No recipes added yet.</p>
   {% endfor %}
-</ul>
+</div>
