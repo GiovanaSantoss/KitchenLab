@@ -1,28 +1,49 @@
-<h1>Recipes</h1>
-<a href="{% url 'add_recipe' %}">Add Recipe</a>
-<div class="recipes-container">
-  {% for recipe in recipes %}
-  <div class="recipe-card">
-    {% if recipe.image %}
-    <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" width="200" />
-    {% endif %}
-    <h2>{{ recipe.name }}</h2>
-    <p>Category: {{ recipe.category }}</p>
-    <p>Difficulty: {{ recipe.difficulty }}</p>
-    <p>Prep Time: {{ recipe.prep_time }} min</p>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipes</title>
+    <link rel="stylesheet" href="{% static 'recipes/style.css' %}" />
+  </head>
+  <body>
+    <header class="header">
+      <h1>KitchenLab Recipes</h1>
+      <a href="{% url 'add_recipe' %}" class="add-btn">+ Add Recipe</a>
+    </header>
 
-    {% if recipe.created_by == user %}
-    <form
-      action="{% url 'delete_recipe' recipe.id %}"
-      method="POST"
-      style="display: inline"
-    >
-      {% csrf_token %}
-      <button type="submit">Delete</button>
-    </form>
-    {% endif %}
-  </div>
-  {% empty %}
-  <p>No recipes added yet.</p>
-  {% endfor %}
-</div>
+    <main class="recipes-container">
+      {% for recipe in recipes %}
+      <div class="recipe-card">
+        {% if recipe.image %}
+        <img
+          src="{{ recipe.image.url }}"
+          alt="{{ recipe.name }}"
+          class="recipe-img"
+        />
+        {% endif %}
+        <div class="recipe-content">
+          <h2>{{ recipe.name }}</h2>
+          <p><strong>Category:</strong> {{ recipe.category }}</p>
+          <p><strong>Difficulty:</strong> {{ recipe.difficulty }}</p>
+          <p><strong>Prep Time:</strong> {{ recipe.prep_time }} min</p>
+
+          {% if recipe.created_by == user %}
+          <form
+            action="{% url 'delete_recipe' recipe.id %}"
+            method="POST"
+            class="delete-form"
+          >
+            {% csrf_token %}
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+      {% empty %}
+      <p class="empty-msg">No recipes added yet.</p>
+      {% endfor %}
+    </main>
+  </body>
+</html>
