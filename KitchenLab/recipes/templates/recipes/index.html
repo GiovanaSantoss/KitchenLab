@@ -1,0 +1,9 @@
+<h1>Receitas</h1>
+<a href="{% url 'add_recipe' %}">Add Recipe</a>
+<ul>
+  {% for recipe in recipes %}
+  <li>{{ recipe.name }} - {{ recipe.category }} - {{ recipe.difficulty }}</li>
+  {% empty %}
+  <li>No recipes add.</li>
+  {% endfor %}
+</ul>
