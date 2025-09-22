@@ -10,6 +10,17 @@
     <p>Category: {{ recipe.category }}</p>
     <p>Difficulty: {{ recipe.difficulty }}</p>
     <p>Prep Time: {{ recipe.prep_time }} min</p>
+
+    {% if recipe.created_by == user %}
+    <form
+      action="{% url 'delete_recipe' recipe.id %}"
+      method="POST"
+      style="display: inline"
+    >
+      {% csrf_token %}
+      <button type="submit">Delete</button>
+    </form>
+    {% endif %}
   </div>
   {% empty %}
   <p>No recipes added yet.</p>
