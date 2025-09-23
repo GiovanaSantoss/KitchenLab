@@ -1,21 +1,21 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Recipe</title>
-    <link rel="stylesheet" href="{% static 'recipes/style.css' %}">
-</head>
-<body class="add-page">
+    <link rel="stylesheet" href="{% static 'recipes/style.css' %}" />
+  </head>
+  <body class="add-page">
     <div class="form-container">
-        <h1>Add a New Recipe</h1>
-        <form method="post" enctype="multipart/form-data" class="recipe-form">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn-submit">Save Recipe</button>
-        </form>
-        <a href="{% url 'index' %}" class="back-link">← Back to Recipes</a>
+      <h1>Add a New Recipe</h1>
+      <form method="post" enctype="multipart/form-data" class="recipe-form">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit" class="btn-submit">Save Recipe</button>
+      </form>
+      <a href="{% url 'index' %}" class="back-link">← Back to Recipes</a>
     </div>
-</body>
+
+  </body>
 </html>
