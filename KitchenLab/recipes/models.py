@@ -31,6 +31,7 @@ class Recipe(models.Model):
         upload_to='recipe_images/', null=True, blank=True, verbose_name='Recipe Image')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    rating = models.IntegerField(null=True, blank=True) 
 
     def __str__(self):
         return self.name

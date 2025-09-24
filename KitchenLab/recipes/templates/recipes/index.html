@@ -18,19 +18,24 @@
 
     <main class="recipes-container">
       {% for recipe in recipes %}
-      <div class="recipe-card" onclick="toggleDetails({{ recipe.id }})">
+      <div class="recipe-card">
         {% if recipe.image %}
         <img
           src="{{ recipe.image.url }}"
           alt="{{ recipe.name }}"
           class="recipe-img"
+          onclick="toggleDetails({{ recipe.id }})"
+          style="cursor: pointer"
         />
         {% endif %}
         <div class="recipe-content">
-          <h2>{{ recipe.name }}</h2>
+          <h2 onclick="toggleDetails({{ recipe.id }})" style="cursor: pointer">
+            {{ recipe.name }}
+          </h2>
           <p><strong>Category:</strong> {{ recipe.category }}</p>
           <p><strong>Difficulty:</strong> {{ recipe.difficulty }}</p>
           <p><strong>Prep Time:</strong> {{ recipe.prep_time }} min</p>
+          <p><strong>Rating:</strong> {{ recipe.rating }} ⭐</p>
 
           <div id="details-{{ recipe.id }}" class="recipe-details">
             <h3>Ingredients</h3>
@@ -59,10 +64,10 @@
     <script>
       function toggleDetails(id) {
         const details = document.getElementById(`details-${id}`);
-        if (details.style.display === "none" || details.style.display === "") {
-          details.style.display = "block"; // mostra detalhes
+        if (details.classList.contains("show")) {
+          details.classList.remove("show");
         } else {
-          details.style.display = "none"; // esconde detalhes
+          details.classList.add("show");
         }
       }
     </script>

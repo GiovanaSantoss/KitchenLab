@@ -43,9 +43,21 @@ body {
 
 .recipes-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 3fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding: 30px;
+}
+
+@media (max-widht: 1024px) {
+  .recipes-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-widht: 700px) {
+  .recipes-container {
+    grid-template-columns: repeat(1fr);
+  }
 }
 
 .recipe-card {
@@ -65,6 +77,24 @@ body {
   width: 350px;
   height: 250px;
   object-fit: cover;
+}
+
+.recipe-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 1s ease, padding 0.4s ease;
+  padding: 0 10px;
+  background-color: #fdfdfd;
+  border-radius: 10px;
+  margin-top: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+.recipe-details.show {
+  max-height: 500px;
+  padding: 10px;
+  display: block;
 }
 
 .recipe-content {
