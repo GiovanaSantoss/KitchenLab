@@ -14,8 +14,17 @@
         {% csrf_token %} {{ form.as_p }}
         <button type="submit" class="btn-submit">Save Recipe</button>
       </form>
+
+      {% if saved %}
+      <h2>A random pupper to make your day better!</h2>
+      <img
+        src="{{ dog_image_url }}"
+        alt="Random dog"
+        style="max-width: 300px"
+      />
+      {% endif %}
+
       <a href="{% url 'index' %}" class="back-link">← Back to Recipes</a>
     </div>
-
   </body>
 </html>
