@@ -35,7 +35,14 @@
           <p><strong>Category:</strong> {{ recipe.category }}</p>
           <p><strong>Difficulty:</strong> {{ recipe.difficulty }}</p>
           <p><strong>Prep Time:</strong> {{ recipe.prep_time }} min</p>
-          <p><strong>Rating:</strong> {{ recipe.rating }} ⭐</p>
+
+          <div class="stars" data-recipe-id="{{ recipe.id }}">
+            {% for i in "12345" %}
+            <span class="star" data-value="{{ forloop.counter }}">
+              {% if forloop.counter <= recipe.rating %}★{% else %}☆{% endif %}
+            </span>
+            {% endfor %}
+          </div>
 
           <div id="details-{{ recipe.id }}" class="recipe-details">
             <h3>Ingredients</h3>
@@ -70,6 +77,46 @@
           details.classList.add("show");
         }
       }
+    </script>
+
+    <script>
+      document.querySelectorAll(".stars").forEach((starContainer) => {
+        const stars = starContainer.querySelectorAll(".star");
+        const recipeId = starContainer.dataset.recipeId;
+
+        stars.forEach((star) => {
+          star.addEventListener("mouseover", () => {
+            let val = star.dataset.value;
+            stars.forEach((s) => s.classList.remove("hovered"));
+            for (let i = 0; i < val; i++) {
+              stars[i].classList.add("hovered");
+            }
+          });
+
+          star.addEventListener("mouseout", () => {
+            stars.forEach((s) => s.classList.remove("hovered"));
+          });
+
+          star.addEventListener("click", () => {
+            let rating = star.dataset.value;
+
+            fetch(`/rate-recipe/${recipeId}/`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}",
+              },
+              body: JSON.stringify({ rating: rating }),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                stars.forEach((s, i) => {
+                  s.textContent = i < rating ? "★" : "☆";
+                });
+              });
+          });
+        });
+      });
     </script>
   </body>
 </html>

@@ -234,3 +234,13 @@ body {
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+.stars {
+  cursor: pointer;
+  font-size: 24px;
+  color: gold;
+}
+.star:hover,
+.star.hovered {
+  color: orange;
+}

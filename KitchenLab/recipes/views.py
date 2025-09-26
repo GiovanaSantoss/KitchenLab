@@ -8,6 +8,15 @@ from django.shortcuts import get_object_or_404
 import requests
 from django.shortcuts import render
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .models import Recipe
+
 
 def index(request):
     recipes = Recipe.objects.all()
@@ -47,3 +56,15 @@ def delete_recipe(request, recipe_id):
     if recipe.created_by == request.user:
         recipe.delete()
     return redirect('index')
+
+
+@csrf_exempt
+def rate_recipe(request, recipe_id):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        rating = int(data.get("rating", 0))
+        recipe = Recipe.objects.get(id=recipe_id)
+        recipe.rating = rating
+        recipe.save()
+        return JsonResponse({"success": True, "rating": rating})
+    return JsonResponse({"success": False}, status=400)
