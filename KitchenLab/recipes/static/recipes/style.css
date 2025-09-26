@@ -244,3 +244,12 @@ body {
 .star.hovered {
   color: orange;
 }
+
+.add-recipe-page {
+  background-image: url("images/fundo.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding: 20px;
+}
